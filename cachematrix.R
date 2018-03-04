@@ -1,3 +1,8 @@
+#The file has two functions. The first creates
+#a cache for a matrix and the other either
+#computes and stores the inverse of the matrix
+#or it retrieves that value from the cache
+
 #makeCacheMatrix creates a special matrix 
 #object which finds and caches the inverse 
 #of itself. It goes through 4 steps: 
@@ -7,17 +12,17 @@
 
 
 makeCacheMatrix <- function(x = matrix()) {
-        InverseM <- NULL
+        inv <- NULL
         set <- function(y) {
                 x <<- y
-                InverseM <<- NULL
+                inv <<- NULL
         }
         get <- function() x
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
-        list(set = set, get = get,
-             setInverseM = setInverseM,
-             getInverseM = getInverseM)
+        setinverse <- function(inverse) inv <<- inverse
+        getinverse <- function() inv
+        list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
+}
+
 }
 
 #Now my friends this next function will also
@@ -31,16 +36,17 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 cacheSolve <- function(x, ...) {
-        
-        InverseM <- x$getInverseM()
-        if(!is.null(InverseM)) {
+        inv <- x$getinverse()
+        if(!is.null(inv)) {
                 message("getting cached data")
-                return(InversM)
+                return(inv)
         }
         data <- x$get()
-        InverseM <- solve(data)
-        x$setInverseM(InverseM)
-        InverseM
+        inv <- solve(data)
+        x$setinverse(inv)
+        inv
+}
+
 }
 
 
